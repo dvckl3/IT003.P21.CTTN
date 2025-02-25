@@ -17,9 +17,10 @@ def quick_sort(arr,low,high):
         quick_sort(arr,pi+1,high)
     return arr  
 
+for i in range(10):
+    test_sq=np.loadtxt(f"dataset/seq_{i}.txt")
+    start_time=time.time()
+    print(quick_sort(test_sq,0,len(test_sq)-1))
+    print("---%s seconds---" % (time.time()-start_time))
 
-test_sq=[1,9,4,5,10,8,21,37]
 
-start_time=time.time()
-print(quick_sort(test_sq,0,len(test_sq)-1))
-print("---%s seconds---" % (time.time()-start_time))
