@@ -18,7 +18,7 @@ def generate_sequence(path):
         np.save(file_path,data)
         print(f"lưu file {file_path}")
 
-save_dir="home/duc112006/DSA/sorting"
+save_dir="/home/duc112006/DSA/sorting"
 
 generate_sequence(save_dir)
 
