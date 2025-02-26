@@ -85,3 +85,11 @@ def heap_sort(arr):
         heapify(arr, i, 0)
 
     return arr  
+# đếm thời gian cho mỗi thuật toán tương ứng với các bộ test khác nhau 
+sort = lambda arr : quick_sort(arr,0,len(arr)-1)
+data=np.load("/home/duc112006/DSA/sorting/testcase_2.npy")
+start_time=time.time()
+
+
+end_time=time.time()
+
