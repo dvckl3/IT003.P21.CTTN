@@ -6,25 +6,44 @@ import os
 def numpy_sort(arr):
     return np.sort(arr)
 
-def partition(arr, low, high):
-    divider = (low - 1)
-    pivot = arr[high]
-    for j in range(low, high):
+
+ 
+def median_of_three(arr, l, h):
+    mid = (l + h) // 2
+    a, b, c = arr[l], arr[mid], arr[h]
+    if a > b: a, b = b, a
+    if a > c: a, c = c, a
+    if b > c: b, c = c, b
+    if b == arr[l]: return l
+    elif b == arr[mid]: return mid
+    else: return h
+
+def partition(arr, l, h):
+    pivot_idx = median_of_three(arr, l, h)
+    arr[pivot_idx], arr[h] = arr[h], arr[pivot_idx]
+    pivot = arr[h]
+    i = l - 1  
+    for j in range(l, h):
         if arr[j] <= pivot:
-            divider = divider + 1
-            arr[divider], arr[j] = arr[j], arr[divider]
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]  
+    arr[i + 1], arr[h] = arr[h], arr[i + 1]  
+    return i + 1
 
-    arr[divider + 1], arr[high] = arr[high], arr[divider + 1]
-    return divider + 1
+def quick_sort(arr):
+    l, h = 0, len(arr) - 1
+    if l >= h:
+        return arr  
+    stack = [(l, h)]
+    while stack:
+        l, h = stack.pop()
+        p = partition(arr, l, h)
+        if p - 1 > l:
+            stack.append((l, p - 1))
+        if p + 1 < h:
+            stack.append((p + 1, h))
+    return arr  
 
-
-def quick_sort(arr, low, high):
-    if low < high:
-        pi = partition(arr, low, high)
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
-
-    return arr
 
 
 def merge_sort(arr):
@@ -85,11 +104,6 @@ def heap_sort(arr):
         heapify(arr, i, 0)
 
     return arr  
-# đếm thời gian cho mỗi thuật toán tương ứng với các bộ test khác nhau 
-sort = lambda arr : quick_sort(arr,0,len(arr)-1)
-data=np.load("/home/duc112006/DSA/sorting/testcase_2.npy")
-start_time=time.time()
 
 
-end_time=time.time()
 
