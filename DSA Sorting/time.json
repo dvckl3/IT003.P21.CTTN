@@ -1,0 +1,62 @@
+{
+    "testcase_0.npy": {
+        "numpy_sort": 32.384872,
+        "quick_sort": 4083.097458,
+        "merge_sort": 7156.687021,
+        "heap_sort": 19267.762661
+    },
+    "testcase_1.npy": {
+        "numpy_sort": 31.779051,
+        "quick_sort": 9069.428682,
+        "merge_sort": 7921.773911,
+        "heap_sort": 16410.375357
+    },
+    "testcase_2.npy": {
+        "numpy_sort": 29.333115,
+        "quick_sort": 5756.17671,
+        "merge_sort": 8656.757832,
+        "heap_sort": 22923.997402
+    },
+    "testcase_3.npy": {
+        "numpy_sort": 33.44512,
+        "quick_sort": 5607.779026,
+        "merge_sort": 8906.870127,
+        "heap_sort": 21627.872944
+    },
+    "testcase_4.npy": {
+        "numpy_sort": 34.030437,
+        "quick_sort": 5563.650846,
+        "merge_sort": 9069.1185,
+        "heap_sort": 22203.114033
+    },
+    "testcase_5.npy": {
+        "numpy_sort": 33.00786,
+        "quick_sort": 5637.568712,
+        "merge_sort": 8633.510828,
+        "heap_sort": 21493.979454
+    },
+    "testcase_6.npy": {
+        "numpy_sort": 33.823252,
+        "quick_sort": 5702.613115,
+        "merge_sort": 8298.530102,
+        "heap_sort": 20673.472404
+    },
+    "testcase_7.npy": {
+        "numpy_sort": 32.498837,
+        "quick_sort": 5278.729677,
+        "merge_sort": 8714.384079,
+        "heap_sort": 21437.320948
+    },
+    "testcase_8.npy": {
+        "numpy_sort": 28.536558,
+        "quick_sort": 5292.10186,
+        "merge_sort": 8419.629574,
+        "heap_sort": 21147.305965
+    },
+    "testcase_9.npy": {
+        "numpy_sort": 51.42355,
+        "quick_sort": 6168.048859,
+        "merge_sort": 8946.114063,
+        "heap_sort": 21172.427416
+    }
+}
