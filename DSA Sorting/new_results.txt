@@ -1,0 +1,11 @@
+cpp std::sort
+testcase_0.npy 119.12ms
+testcase_1.npy 97.1412ms
+testcase_2.npy 241.088ms
+testcase_3.npy 255.861ms
+testcase_4.npy 281.722ms
+testcase_5.npy 262.676ms
+testcase_6.npy 259.026ms
+testcase_7.npy 247.053ms
+testcase_8.npy 248.414ms
+testcase_9.npy 239.267ms
