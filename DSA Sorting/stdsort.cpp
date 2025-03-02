@@ -35,6 +35,6 @@ void process_test_cases(const std::string& input_file, const std::string& output
 }
 
 int main() {
-    process_test_cases("all_testcases.txt", "new_results.txt");
+    process_test_cases("all_testcases.txt", "cpp_sort.txt");
     return 0;
 }
