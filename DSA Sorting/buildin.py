@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 json_path = "/home/duc112006/DSA/sorting/result/time.json"
-cpp_result_path = "/home/duc112006/DSA/sorting/new_results.txt"
+cpp_result_path = "/home/duc112006/DSA/sorting/cpp_sort.txt"
 
 
 with open(json_path, "r") as f:
