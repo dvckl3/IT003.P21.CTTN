@@ -1,5 +1,6 @@
 # Thư viện Regular Expression trong Python
 
+
 ## Khái niệm biểu thức chính quy 
 Biểu thức chính quy là các mẫu dùng để tìm kiếm các bộ kí tự được kết hợp với nhau trong các chuỗi kí tự. Các nhóm kí tự, kí hiệu được viết ra theo quy luật tạo thành mẫu và nó được sử dụng để tìm kiếm văn bản.
 
@@ -7,6 +8,20 @@ Một biểu thức chính quy là một mẫu (pattern) nó tương đồng quy
 Trong Python3 có thư viện `re` hỗ trợ làm việc với biểu thức chính quy. Doc đầy đủ về thư viện này có thể tham khảo tại [đây](https://docs.python.org/2/library/re.html#module-re). 
 
 ![image](https://github.com/user-attachments/assets/3d9b08fc-ddba-4055-a33e-ec460f244551)
+
+## Một số cú pháp Python
+
+| Hàm                      | Mô tả                                                                 |
+|--------------------------|-----------------------------------------------------------------------|
+| `re.match(pattern, string)` | Kiểm tra xem phần đầu của chuỗi có khớp với mẫu không. Trả về đối tượng match nếu khớp, ngược lại trả về `None`. |
+| `re.search(pattern, string)` | Tìm kiếm mẫu trong toàn bộ chuỗi. Trả về đối tượng match của lần xuất hiện đầu tiên nếu tìm thấy, ngược lại trả về `None`. |
+| `re.findall(pattern, string)` | Tìm tất cả các lần xuất hiện của mẫu trong chuỗi và trả về danh sách các chuỗi khớp. |
+| `re.finditer(pattern, string)` | Tương tự như `findall`, nhưng trả về một iterator chứa tất cả các đối tượng match. |
+| `re.sub(pattern, repl, string)` | Thay thế tất cả các phần khớp với mẫu trong chuỗi bằng chuỗi thay thế `repl`. |
+| `re.split(pattern, string)` | Tách chuỗi thành danh sách các phần tử dựa trên mẫu. |
+| `re.compile(pattern)` | Tiền biên dịch mẫu regex để sử dụng nhiều lần, giúp tăng hiệu suất. |
+
+
 
 Ta sẽ tìm hiểu qua một số biểu thức chính quy cơ bản 
 
@@ -126,7 +141,7 @@ print(matches)
 Các kí tự meta `+`,`*` và `?` ban đầu đều ở chế độ tham lam (greedy mode) tức là chúng sẽ so khớp với càng nhiều kí tự càng tốt. Việc thêm kí tự `?` sẽ giúp chuyển về mode non-greedy tức là sẽ lấy so khớp ít nhất có thể có. 
 Chẳng hạn 
 
-```python=
+```python
 import re
 text='abbbbc'
 pattern_greedy = r'ab*'
@@ -138,5 +153,108 @@ print(match_non_greedy.group())  # Output: 'a'
 ```
 Tương tự với `+?` và `??`
 
+### {m}, {m,n}, {m,n}?
+`{m}` biểu thị việc lặp lại kí tự hoặc nhóm kí tự đứng trước nó đúng $m$ lần. Nếu ít hơn $m$ thì sẽ không so khớp. Chẳng hạn như `a{6}` thì sẽ so khớp với `aaaaaa`.
 
-   
+
+`{m,n}` khớp từ `m` đến `n`  kí tự, hoặc nhóm kí tự đướng trước nó. Ví dụ `a{2,4}` thì sẽ so khớp với `aa,aaa,aaaa`. Mode greedy thì sẽ lấy nhiều nhất có thể. Ngoài ra nếu ta bỏ `m` đi thì lower bound của số kí tự là 0, `{,n}`, cón nếu bỏ `n` đi thì upper bound của số kí tự sẽ là vô hạn, tức là bao nhiêu cũng được, `{m,}`
+
+`{m,n}?`, như ta đã đề cập ở trên thì việc thêm kí tự `?` sẽ đưa meta char về non greedy mode, tức là lấy ít nhất có thể, ví dụ `aaaaa` thì khi dùng so khớp `a{2,4}` sẽ chỉ trả về `aa`.
+
+Ví dụ:
+
+```python
+import re
+
+# Chuỗi mẫu
+text = "aaaaa"
+
+# Sử dụng {m}
+pattern1 = r'a{3}'
+match1 = re.search(pattern1, text)
+print(match1.group())  # Output: 'aaa'
+
+# Sử dụng {m,n} (tham lam)
+pattern2 = r'a{2,4}'
+match2 = re.search(pattern2, text)
+print(match2.group())  # Output: 'aaaa'
+
+# Sử dụng {m,n}? (không tham lam)
+pattern3 = r'a{2,4}?'
+match3 = re.search(pattern3, text)
+print(match3.group())  # Output: 'aa'
+```
+### |, `\`, []
+`\` dùng để biểu diễn các kí tự đặc biệt, cụ thể nó được dùng để thoát các kí tự đặc biệt. Chẳng hạn ta có `\.` sẽ so khớp với dấu chấm `.` trong văn bản thay vì meta char Dot như ta đề cập ở trên. 
+
+`|` hay OR dùng để so khớp với nhiều lựa chọn biểu thức chính quy khác nhau. Ví dụ `A|B` sẽ match với một trong hai REs `A` hoặc `B` và sẽ so khớp từ trái sang phải, tức là kiểm tra `A` trước rồi mới tới `B`.
+
+Cuối cùng và quan trọng nhất là ngoặc vuông `[]` dùng để chỉ một tập hợp các kí tự có thể so khớp tại một vị trí cụ thể.
+
+Ví dụ: `[a-zA-Z]` sẽ khớp với bất kì chữ cái nào, không phân biệt chữ hoa hay thường. 
+
+```python
+import re
+text = "Thời gian: 10.30 sáng."
+pattern = r'\d+\.\d+'
+matches = re.findall(pattern, text)
+print(matches)
+# ['10.30']
+```
+
+```python
+import re
+text = "Tôi có một con mèo và một con chó."
+pattern = r'mèo|chó'
+matches = re.findall(pattern, text)
+print(matches)
+# ['mèo', 'chó']
+```
+
+
+```python
+import re
+text = "abc xyz acb bac cab"
+pattern = r'[abc]'
+matches = re.findall(pattern, text)
+print(matches)
+# ['a', 'b', 'c', 'a', 'c', 'b', 'b', 'a', 'c', 'c', 'a', 'b']
+```
+
+### 
+
+## Shorthand Character Sets
+Biểu thức chính quy cung cấp các shorthand cho các bộ ký tự thường được sử dụng, cung cấp các shorthand thuận tiện cho các biểu thức thông thường được sử dụng. Các bộ ký tự shorthand như sau:
+
+
+|Shorthand|Description|
+|:----:|----|
+|.| Bất kỳ kí tự nào ngoại trừ dòng mới|
+|\w|Khớp các ký tự chữ và số: `[a-zA-Z0-9_]`|
+|\W|Khớp các ký tự không phải chữ và số: `[^\w]`|
+|\d|khớp với số trong khoảng: `[0-9]`|
+|\D|Khớp không có chữ số: `[^\d]`|
+|\s|Khớp các ký tự khoảng trắng: `[\t\n\f\r\p{Z}]`|
+|\S|Khớp với ký tự không phải khoảng trắng: `[^\s]`|
+
+## Flags
+
+
+Cờ (flags) cũng được gọi là bổ nghĩa (modifiers) vì chúng sửa đổi đầu ra của biểu thức chính quy. Các cờ này có thể được sử dụng theo bất kỳ thứ tự hoặc kết hợp nào và là một phần không thể thiếu của RegExp. Trong Python có các cờ như sau: 
+
+
+
+| Cờ (Flag)       | Tên viết tắt | Mô tả                                                                                     |
+|-----------------|--------------|-------------------------------------------------------------------------------------------|
+| `re.IGNORECASE` | `re.I`       | Không phân biệt chữ hoa và chữ thường khi so khớp.                                         |
+| `re.MULTILINE`  | `re.M`       | Cho phép các ký tự mỏ neo như `^` và `$` khớp với vị trí bắt đầu và kết thúc của mỗi dòng.|
+| `re.DOTALL`     | `re.S`       | Làm cho ký tự `.` khớp với tất cả các ký tự, bao gồm cả ký tự xuống dòng (`\n`).           |
+| `re.VERBOSE`    | `re.X`       | Cho phép viết biểu thức chính quy trên nhiều dòng và thêm chú thích, giúp biểu thức dễ đọc hơn.|
+| `re.ASCII`      | `re.A`       | Buộc các ký tự đặc biệt như `\w`, `\b`, `\s` chỉ khớp với các ký tự ASCII.                 |
+| `re.UNICODE`    | `re.U`       | Đây là giá trị mặc định; các ký tự đặc biệt sẽ khớp với cả các ký tự Unicode.              |
+| `re.LOCALE`     | `re.L`       | Sử dụng cài đặt ngôn ngữ địa phương (locale) để xác định hành vi của các ký tự đặc biệt.   |
+
+
+
+
+
