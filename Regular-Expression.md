@@ -221,21 +221,57 @@ print(matches)
 # ['a', 'b', 'c', 'a', 'c', 'b', 'b', 'a', 'c', 'c', 'a', 'b']
 ```
 
-### 
+### Capturing group and Non-capturing group
+
+
+| Loại nhóm            | Cú pháp      | Mô tả                                                                                 |
+|----------------------|--------------|---------------------------------------------------------------------------------------|
+| Capturing Group      | `(pattern)`  | Nhóm biểu thức và lưu trữ phần khớp để truy xuất sau này.                             |
+| Non-Capturing Group  | `(?:pattern)`| Nhóm biểu thức mà không lưu trữ phần khớp, hữu ích khi không cần truy xuất nội dung.   |
+
+
+```python
+import re
+
+s = 'Python 3.10'
+pattern = r'(\d+)\.(\d+)'
+
+match = re.search(pattern, s)
+if match:
+    print(match.group())   # Output: 3.10
+    print(match.group(1))  # Output: 3
+    print(match.group(2))  # Output: 10
+```
+
+Capturing groups cho phép ta nhóm một phần của biểu thức chính quy và trích xuất nội dung khớp với phần đó. Để tạo một capturing group, ta đặt phần biểu thức cần nhóm trong dấu ngoặc đơn `()`. Khi một biểu thức chính quy với capturing groups khớp với một chuỗi, ta có thể truy xuất nội dung của các nhóm này thông qua phương thức `.group()` của đối tượng match.
+
+Còn ở ví dụ dưới đây, `(?:\d+)` là non-capturing group, khớp với phần `3` nhưng không lưu trữ nội dung.
+```python
+import re
+
+s = 'Python 3.10'
+pattern = r'(?:\d+)\.(\d+)'
+
+match = re.search(pattern, s)
+if match:
+    print(match.group())   # Output: 3.10
+    print(match.group(1))  # Output: 10
+```
 
 ## Shorthand Character Sets
 Biểu thức chính quy cung cấp các shorthand cho các bộ ký tự thường được sử dụng, cung cấp các shorthand thuận tiện cho các biểu thức thông thường được sử dụng. Các bộ ký tự shorthand như sau:
 
 
-|Shorthand|Description|
-|:----:|----|
-|.| Bất kỳ kí tự nào ngoại trừ dòng mới|
-|\w|Khớp các ký tự chữ và số: `[a-zA-Z0-9_]`|
-|\W|Khớp các ký tự không phải chữ và số: `[^\w]`|
-|\d|khớp với số trong khoảng: `[0-9]`|
-|\D|Khớp không có chữ số: `[^\d]`|
-|\s|Khớp các ký tự khoảng trắng: `[\t\n\f\r\p{Z}]`|
-|\S|Khớp với ký tự không phải khoảng trắng: `[^\s]`|
+| Shorthand | Mô tả                                                                                             | Biểu thức tương đương     |
+|-----------|---------------------------------------------------------------------------------------------------|---------------------------|
+| `\d`      | Bất kỳ chữ số nào từ 0 đến 9                                                                       | `[0-9]`                   |
+| `\D`      | Bất kỳ ký tự nào không phải là chữ số                                                              | `[^0-9]`                  |
+| `\w`      | Bất kỳ ký tự chữ cái, chữ số hoặc dấu gạch dưới                                                     | `[a-zA-Z0-9_]`            |
+| `\W`      | Bất kỳ ký tự nào không phải là chữ cái, chữ số hoặc dấu gạch dưới                                   | `[^a-zA-Z0-9_]`           |
+| `\s`      | Bất kỳ ký tự khoảng trắng nào (khoảng trắng, tab, xuống dòng, v.v.)                                | `[ \t\n\r\f\v]`           |
+| `\S`      | Bất kỳ ký tự nào không phải là khoảng trắng                                                        | `[^ \t\n\r\f\v]`          |
+| `\b`      | Khớp với vị trí nằm giữa một ký tự thuộc nhóm `\w` và một ký tự không thuộc nhóm `\w` (ranh giới từ) |                           |
+| `\B`      | Khớp với vị trí không phải là ranh giới từ                                                         |                           |
 
 ## Flags
 
@@ -257,4 +293,4 @@ Cờ (flags) cũng được gọi là bổ nghĩa (modifiers) vì chúng sửa �
 
 
 
-
+(Still updating...)
