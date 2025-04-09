@@ -76,6 +76,9 @@ int main(){
     node3->next=nullptr;
     // duyệt và in ra danh sách 
     InsertAt(head,0,99);
+    append(head,4);
     printList(head);
     return 0;
 }
+
+// output: 99 --> 1 --> 2 --> 3 --> 4 --> nullptr
